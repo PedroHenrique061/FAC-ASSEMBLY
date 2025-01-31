@@ -1,0 +1,55 @@
+.data 
+over: .asciiz "overflow\n"
+p: .asciiz "\n"
+
+
+.text 
+main: 
+    li $v0,5           
+    syscall
+    move $s0,$v0        
+
+    li $v0,5            
+    syscall
+    move $t0,$v0        
+
+    li $v0,5           
+    syscall
+    move $t1,$v0        
+
+    beqz $s0,sinal   
+    
+    addu $t3,$t0,$t1           
+    xor $t4,$t0,$t1         
+    slt $t4,$t4,$zero         
+    bne $t4,$zero,jump
+    
+    xor $t4,$t3,$t0
+    slt $t4,$t4,$zero
+    bne $t4,$zero,overflow     
+    j jump                    
+
+sinal:
+    addu $t3,$t0,$t1         
+    nor $t4,$t1,$zero         
+    sltu $t4,$t4,$t0    
+         
+    bne $t4,$zero,overflow
+    j jump    
+
+jump:
+    move $a0,$t3              
+    li $v0,1                  
+    syscall
+    la $a0,p
+    li $v0,4
+    syscall
+    li $v0,10                
+    syscall
+
+overflow:
+    li $v0,4                  
+    la $a0,over               
+    syscall
+    li $v0,10                 
+    syscall

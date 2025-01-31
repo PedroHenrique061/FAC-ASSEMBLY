@@ -1,0 +1,28 @@
+.text
+main:
+    # Leitura de n
+    li $v0, 5         # Syscall para ler inteiro
+    syscall
+    move $t0, $v0     # Armazena n em $t0
+
+    # Leitura de i
+    li $v0, 5         # Syscall para ler inteiro
+    syscall
+    move $t1, $v0     # Armazena i em $t1
+
+    # Calcula 2^i - 1
+    li $t2, 1         # Inicializa $t2 com 1
+    sllv $t2, $t2, $t1 # Desloca 1 para a esquerda i vezes (2^i)
+    addi $t2, $t2, -1  # Subtrai 1 (2^i - 1)
+
+    # Calcula n & (2^i - 1)
+    and $t3, $t0, $t2  # Aplica a máscara para obter o resto
+
+    # Imprime o resultado
+    move $a0, $t3      # Move o resultado para $a0
+    li $v0, 1          # Syscall para imprimir inteiro
+    syscall
+
+    # Finaliza o programa
+    li $v0, 10         # Syscall para terminar
+    syscall

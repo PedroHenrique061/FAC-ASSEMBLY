@@ -1,0 +1,40 @@
+.data
+    barran: .asciiz "\n"
+
+.text
+main:
+    li $v0, 5
+    syscall
+    move $t0, $v0
+    move $t1, $zero
+    li $t3, -2147483648
+
+laco: 
+    slt $t2, $t1, $t0
+    beq $t2, $zero, print
+
+    li $v0, 5
+    syscall
+    move $t5, $v0
+
+    ble $t5, $t3, continuar
+    move $t3, $t5
+
+
+continuar:
+    addi $t1, 1
+    j laco
+
+print:
+    move $a0, $t3
+    li $v0, 1
+    syscall
+    la $a0, barran
+    li $v0, 4
+    syscall
+    j encerra
+
+encerra:
+    li $v0, 10
+    syscall
+

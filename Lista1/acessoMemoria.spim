@@ -1,0 +1,22 @@
+acessoAMemoria:
+    li      $v0,    5
+    syscall
+    move    $t0,    $v0
+
+    li      $v0,    5
+    syscall
+    move    $t1,    $v0
+
+    li      $v0,    5
+    syscall
+    move    $t2,    $v0
+
+    mul     $t1,    $t1,    4
+    add     $t1,    $s0,    $t1
+    lw      $t3,    0($t1)
+
+    add     $t2,    $t2,    $t3
+
+    mul     $t0,    $t0,    4
+    add     $t0,    $t0,    $s0
+    sw      $t2,    0($t0)
